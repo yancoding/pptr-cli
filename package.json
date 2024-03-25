@@ -1,0 +1,17 @@
+{
+  "name": "pptr-cli",
+  "version": "0.0.1-alpha.9",
+  "description": "用于生成pdf的命令行工具，包装自puppeteer，用于快速替代wkhtmltopdf",
+  "bin": {
+    "pptr-cli": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "puppeteer": "^21.7.0"
+  }
+}
