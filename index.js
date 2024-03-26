@@ -31,6 +31,8 @@ const toPdf = async (options) => {
 
   await page.pdf({
     path,
+    width,
+    height,
     format,
     landscape,
     printBackground: true,
