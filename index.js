@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const puppeteer = require('puppeteer')
-const { Command } = require('commander')
+const { Command, InvalidArgumentError } = require('commander')
 const program = new Command()
 
 const toPdf = async (options) => {
@@ -47,6 +47,14 @@ const toPdf = async (options) => {
   await browser.close()
 }
 
+function parseToInt(value) {
+  const parsedValue = parseInt(value, 10);
+  if (isNaN(parsedValue)) {
+    throw new InvalidArgumentError('Not a number.');
+  }
+  return parsedValue;
+}
+
 program
   .name('pptr-cli')
   .description('用于生成pdf的命令行工具')
@@ -55,7 +63,7 @@ program
 program.command('pdf')
   .description('根据指定的url生成pdf')
   .requiredOption('--url <url>', 'url地址')
-  .option('--device-scale-factor <number>', '物理像素分辨率与CSS像素分辨率之比')
+  .option('--device-scale-factor <number>', '物理像素分辨率与CSS像素分辨率之比', parseToInt)
   .option('--width <string>', 'pdf宽度')
   .option('--height <string>', 'pdf高度')
   .option('--format <string>', 'pdf format')
