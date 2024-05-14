@@ -5,13 +5,19 @@ const { Command } = require('commander')
 const program = new Command()
 
 const toPdf = async (options) => {
-  let { url, path, width, height, format, landscape, heightSelector, cookie } = options
+  let { url, deviceScaleFactor, path, width, height, format, landscape, heightSelector, cookie } = options
 
   const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: 'new',
   })
   const page = await browser.newPage()
+
+  await page.setViewport({
+    width: 0,
+    height: 0,
+    deviceScaleFactor,
+  })
 
   try {
     await page.setCookie(...JSON.parse(cookie))
@@ -49,6 +55,7 @@ program
 program.command('pdf')
   .description('根据指定的url生成pdf')
   .requiredOption('--url <url>', 'url地址')
+  .option('--device-scale-factor <number>', '物理像素分辨率与CSS像素分辨率之比')
   .option('--width <string>', 'pdf宽度')
   .option('--height <string>', 'pdf高度')
   .option('--format <string>', 'pdf format')
